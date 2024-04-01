@@ -219,18 +219,21 @@ const AssignmentCards = ({ assignment }) => {
     setNumItems(numItems + 1);
   };
 
-  const handleRemoveItem = (indexToRemove, isAutocomplete) => {
-    if (
-      (isAutocomplete && numAutocompletes > 1) ||
-      (!isAutocomplete && numItems > 1)
-    ) {
-      const setItemsFunction = isAutocomplete ? setAutocompletes : setItems;
-      const setNumFunction = isAutocomplete ? setNumAutocompletes : setNumItems;
+  const handleRemoveItem = (indexToRemove) => {
+    if (numAutocompletes > 1) {
+      setAutocompletes((prevAutocompletes) =>
+        prevAutocompletes.filter((item) => item.index !== indexToRemove)
+      );
+      setNumAutocompletes((prevNum) => prevNum - 1);
+    }
+  };
 
-      setItemsFunction((prevItems) =>
+  const handleRemoveItem1 = (indexToRemove) => {
+    if (numItems > 1) {
+      setItems((prevItems) =>
         prevItems.filter((item) => item.index !== indexToRemove)
       );
-      setNumFunction((prevNum) => prevNum - 1);
+      setNumItems((prevNum) => prevNum - 1);
     }
   };
 
@@ -387,7 +390,7 @@ const AssignmentCards = ({ assignment }) => {
                   </div>
 
                   {showRemoveButton && (
-                    <Button onClick={() => handleRemoveItem(index)}>
+                    <Button onClick={() => handleRemoveItem1(index)}>
                       Remove
                     </Button>
                   )}
